@@ -3,7 +3,7 @@
             [chess.board :refer :all]))
 
 (deftest make-new-board
-  (let [board (Board)]
+  (let [board (board)]
     (testing "has 8 ranks"
              (is (= 8 (count board))))
 

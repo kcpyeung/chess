@@ -3,7 +3,7 @@
             [chess.piece :refer :all]))
 
 (deftest make-new-pieces
-  (let [piece (Piece "white" "pawn" "a" "1")]
+  (let [piece (piece "white" "pawn" "a" "1")]
     (testing "has a name"
              (is (= "pawn" (:name piece))))
 
@@ -17,7 +17,7 @@
              (is (= "1" (:rank piece))))))
 
 (deftest make-empty-piece
-  (let [piece (EmptyPiece "b" "4")]
+  (let [piece (empty-piece "b" "4")]
     (testing "has a name"
              (is (= "empty" (:name piece))))
 
@@ -32,6 +32,6 @@
 
 (deftest colour-aware-symbols
   (testing "white pieces are capitalised"
-           (is (= "N" (:sym (Piece "white" "knight" "a" "1"))))
-           (is (= "n" (:sym (Piece "black" "Knight" "a" "1"))))
-           (is (= "." (:sym (EmptyPiece "a" "1"))))))
+           (is (= "N" (:sym (piece "white" "knight" "a" "1"))))
+           (is (= "n" (:sym (piece "black" "Knight" "a" "1"))))
+           (is (= "." (:sym (empty-piece "a" "1"))))))

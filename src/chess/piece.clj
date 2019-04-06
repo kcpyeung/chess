@@ -11,7 +11,7 @@
    "king"   "k"
    "pawn"   "p"})
 
-(defn Piece [colour name file rank]
+(defn piece [colour name file rank]
   (let [c (s/lower-case colour)
         n (s/lower-case name)]
     {:name   n,
@@ -24,5 +24,5 @@
                      (= c "black") letter
                      :else         "."))}))
 
-(defn EmptyPiece [file rank]
-  (Piece "empty" "empty" file rank))
+(defn empty-piece [file rank]
+  (piece "empty" "empty" file rank))

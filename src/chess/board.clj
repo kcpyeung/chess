@@ -4,9 +4,9 @@
   (let [to-string (comp str char)]
     (map to-string (range 97 105))))
 
-(defn- Rank [number]
+(defn- rank [number]
   (->> (a-h)
        (map #(str % number))))
 
-(defn Board []
-  (reduce (fn [m k] (assoc m k (Rank k))) {} (range 1 9)))
+(defn board []
+  (reduce (fn [m k] (assoc m k (rank k))) {} (range 1 9)))
