@@ -11,20 +11,18 @@
    "king"   "k"
    "pawn"   "p"})
 
-(def Piece
-  (fn [colour name file rank]
-    (let [c (s/lower-case colour)
-          n (s/lower-case name)]
-      {:name   n,
-       :colour c
-       :file   (s/lower-case file)
-       :rank   rank
-       :sym    (as-> (symbols n) letter
-                     (cond
-                       (= c "white") (s/upper-case letter)
-                       (= c "black") letter
-                       :else         "."))})))
+(defn Piece [colour name file rank]
+  (let [c (s/lower-case colour)
+        n (s/lower-case name)]
+    {:name   n,
+     :colour c
+     :file   (s/lower-case file)
+     :rank   rank
+     :sym    (as-> (symbols n) letter
+                   (cond
+                     (= c "white") (s/upper-case letter)
+                     (= c "black") letter
+                     :else         "."))}))
 
-(def EmptyPiece
-  (fn [file rank]
-    (Piece "empty" "empty" file rank)))
+(defn EmptyPiece [file rank]
+  (Piece "empty" "empty" file rank))
