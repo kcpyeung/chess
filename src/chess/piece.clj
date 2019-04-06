@@ -20,4 +20,11 @@
        :file   (s/lower-case file)
        :rank   rank
        :sym    (as-> (symbols n) letter
-                     (if (= c "white") (s/upper-case letter) letter))})))
+                     (cond
+                       (= c "white") (s/upper-case letter)
+                       (= c "black") letter
+                       :else         "."))})))
+
+(def EmptyPiece
+  (fn [file rank]
+    (Piece "empty" "empty" file rank)))
