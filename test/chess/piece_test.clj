@@ -3,7 +3,7 @@
             [chess.piece :refer :all]))
 
 (deftest make-new-pieces
-  (let [piece (make "white" "pawn" "a" "1")]
+  (let [piece (Piece "white" "pawn" "a" "1")]
     (testing "has a name"
              (is (= "pawn" (:name piece))))
 
