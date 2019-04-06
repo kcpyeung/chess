@@ -15,3 +15,8 @@
 
     (testing "has a rank"
              (is (= "1" (:rank piece))))))
+
+(deftest colour-aware-symbols
+  (testing "white pieces are capitalised"
+           (is (= "N" (:sym (Piece "white" "knight" "a" "1"))))
+           (is (= "n" (:sym (Piece "black" "Knight" "a" "1"))))))
