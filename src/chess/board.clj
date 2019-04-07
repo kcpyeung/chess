@@ -1,12 +1,13 @@
 (ns chess.board
-  (:use [chess.core :only [ascii-to-string]]))
+  (:use [chess.core :only [ascii-to-string]]
+        [chess.piece :only [empty-piece]]))
 
 (defn- a-h []
   (map ascii-to-string (range 97 105)))
 
-(defn- cell [number]
+(defn- cell [rank]
   (->> (a-h)
-       (map #(str % number))))
+       (map (fn [file] {(str file rank) (empty-piece file rank)}))))
 
 (def ranks (range 1 9))
 
