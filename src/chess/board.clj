@@ -1,8 +1,8 @@
-(ns chess.board)
+(ns chess.board
+  (:use [chess.core :only [ascii-to-string]]))
 
 (defn- a-h []
-  (let [to-string (comp str char)]
-    (map to-string (range 97 105))))
+  (map ascii-to-string (range 97 105)))
 
 (defn- rank [number]
   (->> (a-h)
