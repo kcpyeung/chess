@@ -52,3 +52,26 @@
              (is (= 1 (count (piece-maker "king"))))
              (is (= 1 (count (piece-maker "king"))))
              (is (= 1 (count (piece-maker "king")))))))
+
+(deftest all-combinations-are-possible
+  (let [piece-maker (get-piece-maker 3)
+        pieces      (->> (range 5)
+                         (map (fn [_] (piece-maker "pawn")))
+                         flatten)]
+    (testing "pieces are both black and white"
+             (is
+              (= #{"black" "white"}
+                 (->> (map :colour pieces)
+                      set))))
+
+    (testing "pieces are across all ranks"
+             (is
+              (= #{"1" "2" "3" "4" "5" "6" "7" "8"}
+                 (->> (map :rank pieces)
+                      set))))
+
+    (testing "pieces are across all files"
+             (is
+              (= #{"a" "b" "c" "d" "e" "f" "g" "h"}
+                 (->> (map :file pieces)
+                      set))))))

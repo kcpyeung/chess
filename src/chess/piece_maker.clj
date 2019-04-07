@@ -14,7 +14,7 @@
     (fn [name]
       (let [colour (fn [] (if (.nextBoolean random) "black" "white"))
             file   (fn [] (ascii-to-string (+ 97 (.nextInt random 8))))
-            rank   (fn [] (inc (.nextInt random 8)))]
+            rank   (fn [] (str (inc (.nextInt random 8))))]
         (cond
           (= name "king") (list (piece (colour) "king" (file) (rank)))
           :else           (->> name
