@@ -4,7 +4,7 @@
 
 (def files (map ascii-to-string (range 97 105)))
 
-(def ranks (range 1 9))
+(def ranks (range 8 0 -1))
 
 (defn- make-files [rank]
   (reduce (fn [m file] (assoc m file (empty-piece file rank))) {} files))
