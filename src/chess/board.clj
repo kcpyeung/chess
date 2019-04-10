@@ -1,6 +1,7 @@
 (ns chess.board
   (:use [chess.core :only [ascii-to-string]]
-        [chess.piece :only [empty-piece]]))
+        [chess.piece :only [empty-piece]]
+        [chess.piece-maker :only [get-piece-maker]]))
 
 (def files (map ascii-to-string (range 97 105)))
 
@@ -24,7 +25,11 @@
 ; TODO permutate all colours and pieces
 (def colour-piece [["king" "black"] ["king" "white"]])
 
-(defn board [piece-maker]
-  (let [board  (make-ranks)
-        pieces (mapcat (fn [[piece-name piece-colour]] (piece-maker piece-name piece-colour)) colour-piece)]
-    (reduce (fn [current-board new-piece] (place-piece new-piece current-board)) board pieces)))
+(defn board
+  ([]
+   (->> (get-piece-maker (System/currentTimeMillis))
+        board))
+  ([piece-maker]
+   (let [board  (make-ranks)
+         pieces (mapcat (fn [[piece-name piece-colour]] (piece-maker piece-name piece-colour)) colour-piece)]
+     (reduce (fn [current-board new-piece] (place-piece new-piece current-board)) board pieces))))
