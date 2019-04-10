@@ -21,6 +21,10 @@
          (assoc {} rank-of-piece)
          (merge board))))
 
+; TODO permutate all colours and pieces
+(def colour-piece [["king" "black"] ["king" "white"]])
+
 (defn board [piece-maker]
-  (let [bk (first (piece-maker "king" "black"))]
-    (place-piece bk (make-ranks))))
+  (let [board  (make-ranks)
+        pieces (mapcat (fn [[piece-name piece-colour]] (piece-maker piece-name piece-colour)) colour-piece)]
+    (reduce (fn [current-board new-piece] (place-piece new-piece current-board)) board pieces)))
