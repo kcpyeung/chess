@@ -1,7 +1,8 @@
 (ns chess.board
   (:use [chess.core :only [ascii-to-string]]
         [chess.piece :only [empty-piece]]
-        [chess.piece-maker :only [get-piece-maker]]))
+        [chess.piece-maker :only [get-piece-maker]]
+        [clojure.math.combinatorics :only [cartesian-product]]))
 
 (def files (map ascii-to-string (range 97 105)))
 
@@ -22,8 +23,7 @@
          (assoc {} rank-of-piece)
          (merge board))))
 
-; TODO permutate all colours and pieces
-(def colour-piece [["king" "black"] ["king" "white"]])
+(def colour-piece (cartesian-product ["king" "queen" "rook" "knight" "bishop" "pawn"] ["black" "white"]))
 
 (defn board
   ([]
