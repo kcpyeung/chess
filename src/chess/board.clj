@@ -14,22 +14,37 @@
 (defn- make-ranks []
   (reduce (fn [m rank] (assoc m rank (make-files rank))) {} ranks))
 
-(defn- place-piece [piece board]
-  (let [rank-of-piece            (:rank piece)
-        file-of-piece            (:file piece)
-        rank-containing-piece    (board rank-of-piece)]
-    (->> {file-of-piece piece}
-         (merge rank-containing-piece)
-         (assoc {} rank-of-piece)
-         (merge board))))
+(defn- rand-rank-file [random]
+  [(str (inc (.nextInt random 8))) (ascii-to-string (+ 97 (.nextInt random 8)))])
 
-(def colour-piece (cartesian-product ["king" "queen" "rook" "knight" "bishop" "pawn"] ["black" "white"]))
+(defn- next-empty [board random]
+  (loop [[rank file]   (rand-rank-file random)]
+    (let [rank-on-board (board rank)
+          piece         (rank-on-board file)]
+      (if (= "." (:sym piece))
+        [rank file]
+        (recur (rand-rank-file random))))))
+
+(defn- get-piece-placer [random]
+  (fn [board piece]
+    (let [[rank-of-piece file-of-piece]            (next-empty board random)
+          rank-containing-piece                    (board rank-of-piece)]
+      (->> (assoc piece :rank rank-of-piece :file file-of-piece)
+           (hash-map file-of-piece)
+           (merge rank-containing-piece)
+           (assoc {} rank-of-piece)
+           (merge board)))))
+
+(def colour-piece
+  (cartesian-product ["king" "queen" "rook" "knight" "bishop" "pawn"] ["black" "white"]))
 
 (defn board
   ([]
-   (->> (get-piece-maker (System/currentTimeMillis))
-        board))
-  ([piece-maker]
-   (let [board  (make-ranks)
-         pieces (mapcat (fn [[piece-name piece-colour]] (piece-maker piece-name piece-colour)) colour-piece)]
-     (reduce (fn [current-board new-piece] (place-piece new-piece current-board)) board pieces))))
+   (let [seed (System/currentTimeMillis)]
+     (->> (get-piece-maker seed)
+          (board (java.util.Random. seed)))))
+  ([random piece-maker]
+   (let [board       (make-ranks)
+         pieces      (mapcat (fn [[piece-name piece-colour]] (piece-maker piece-name piece-colour)) colour-piece)
+         place-piece (get-piece-placer random)]
+     (reduce (fn [current-board new-piece] (place-piece current-board new-piece)) board pieces))))

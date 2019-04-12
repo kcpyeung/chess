@@ -40,14 +40,4 @@
     (testing "is of the given colour"
              (is
               (= #{"white"}
-                 (set (map :colour pieces)))))
-
-    (testing "pieces are across all ranks"
-             (is
-              (= #{"1" "2" "3" "4" "5" "6" "7" "8"}
-                 (set (map :rank pieces)))))
-
-    (testing "pieces are across all files"
-             (is
-              (= #{"a" "b" "c" "d" "e" "f" "g" "h"}
-                 (set (map :file pieces)))))))
+                 (set (map :colour pieces)))))))
