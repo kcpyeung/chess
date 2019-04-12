@@ -3,18 +3,13 @@
             [chess.piece-maker :refer :all]))
 
 (deftest create-piece-maker-with-a-seed
-  (let [piece-maker (get-piece-maker 3)
-        pieces      (->> (range 5)
-                         (map (fn [_] (piece-maker "pawn" "white")))
-                         flatten)]
-
-    (let [piece-maker (get-piece-maker 3)]
-      (testing "makes random numbers of pawns, including 0 and 8"
-               (let [pieces      (->> (range 100)
-                                      (map (fn [_] (piece-maker "pawn" "white"))))]
-                 (is
-                  (= #{0 1 2 3 4 5 6 7 8}
-                     (set (map count pieces)))))))
+  (let [piece-maker (get-piece-maker 3)]
+    (testing "makes random numbers of pawns, including 0 and 8"
+             (let [pieces      (->> (range 100)
+                                    (map (fn [_] (piece-maker "pawn" "white"))))]
+               (is
+                (= #{0 1 2 3 4 5 6 7 8}
+                   (set (map count pieces))))))
 
     (testing "0, 1, or 2 knights"
              (let [pieces      (->> (range 100)
