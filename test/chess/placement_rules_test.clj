@@ -23,5 +23,10 @@
            (testing "valid if kings are separated by at least 1 rank in the same file"
                     (let [board        {:6 {:a {:name :king, :colour :white, :rank :6, :file :a, :sym :K}}
                                         :8 {:a {:name :king, :colour :black, :rank :8, :file :a, :sym :k}}}]
-                      (is (valid? board))))))
+                      (is (valid? board)))))
 
+  (testing "diagonal kings"
+           (testing "are valid"
+                    (let [board        {:3 {:d {:name :king, :colour :white, :rank :3, :file :d, :sym :K}}
+                                        :4 {:e {:name :king, :colour :black, :rank :4, :file :e, :sym :k}}}]
+                      (is (valid? board))))))
