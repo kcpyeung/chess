@@ -10,6 +10,8 @@
   (let [[king1 king2] (capture-kings board)]
     (not
      (and
+      king1
+      king2
       (->> [king1 king2]
            (map :rank)
            (map (fn [rank-keyword] (Integer/parseInt (name rank-keyword))))
@@ -25,6 +27,8 @@
         [king1 king2]  (capture-kings board)]
     (not
      (and
+      king1
+      king2
       (as-> [king1 king2] v
             (map :file v)
             (filter (fn [neighbours] (= neighbours (into #{} v))) adjacent-files)
