@@ -30,3 +30,26 @@
                     (let [board        {:3 {:d {:name :king, :colour :white, :rank :3, :file :d, :sym :K}}
                                         :4 {:e {:name :king, :colour :black, :rank :4, :file :e, :sym :k}}}]
                       (is (valid? board))))))
+
+(deftest no-pawns-in-promotion-square
+  (testing "8th rank"
+           (testing "should not contain white pawns due to promotion"
+                    (let [board        {:8 {:a {:name :pawn, :colour :white, :rank :8, :file :a, :sym :P}
+                                            :b {:name :rook :colour :white, :rank :8, :file :b, :sym :R}}}]
+                      (is (not (valid? board)))))
+
+           (testing "should not contain black pawns due to normal piece rule"
+                    (let [board        {:8 {:a {:name :pawn, :colour :black, :rank :8, :file :a, :sym :p}
+                                            :b {:name :rook :colour :black, :rank :8, :file :b, :sym :r}}}]
+                      (is (not (valid? board))))))
+
+  (testing "1st rank"
+           (testing "should not contain black pawns due to promotion"
+                    (let [board        {:1 {:a {:name :pawn, :colour :black, :rank :1, :file :a, :sym :p}
+                                            :b {:name :rook :colour :black, :rank :1, :file :b, :sym :r}}}]
+                      (is (not (valid? board)))))
+
+           (testing "should not contain white pawns due to normal piece rule"
+                    (let [board        {:1 {:a {:name :pawn, :colour :white, :rank :1, :file :a, :sym :P}
+                                            :b {:name :rook :colour :white, :rank :1, :file :b, :sym :R}}}]
+                      (is (not (valid? board)))))))
