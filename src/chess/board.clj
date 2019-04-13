@@ -41,9 +41,9 @@
 
 (defn board
   ([]
-   (let [seed (System/currentTimeMillis)]
-     (->> (get-piece-maker seed)
-          (board (java.util.Random. seed)))))
+   (let [random (java.util.Random.)]
+     (->> (get-piece-maker random)
+          (board random))))
   ([random piece-maker]
    (let [board       (make-ranks)
          pieces      (mapcat (fn [[piece-name piece-colour]] (piece-maker piece-name piece-colour)) colour-piece)

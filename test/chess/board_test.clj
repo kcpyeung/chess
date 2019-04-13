@@ -4,7 +4,8 @@
             [chess.piece-maker :refer [get-piece-maker]]))
 
 (deftest make-new-board
-  (let [board (board (java.util.Random. 1) (get-piece-maker 1))]
+  (let [random (java.util.Random. 1)
+        board  (board random (get-piece-maker random))]
     (testing "has 8 ranks"
              (is (= 8 (count board))))
 
@@ -12,11 +13,12 @@
              (is (every? #(= 8 %) (map #(count (nth % 1)) board))))))
 
 (deftest placing-pieces-on-board
-  (let [new-board (board (java.util.Random. 1) (get-piece-maker 1))
-        a6        (:a (:6 new-board))
+  (let [random    (java.util.Random. 1)
+        new-board (board random (get-piece-maker random))
+        a2        (:a (:2 new-board))
         d4        (:d (:4 new-board))]
-    (testing "board places black king on at a6 itself using Piece Maker"
-             (is (= a6 {:name :king, :colour :black, :file :a, :rank :6, :sym :k})))
+    (testing "board places white king on at a2 itself using Piece Maker"
+             (is (= a2 {:name :king, :colour :white, :file :a, :rank :2, :sym :K})))
 
-    (testing "board places white king on at d4 itself using Piece Maker"
-             (is (= d4 {:name :king, :colour :white, :file :d, :rank :4, :sym :K})))))
+    (testing "board places black king on at d4 itself using Piece Maker"
+             (is (= d4 {:name :king, :colour :black, :file :d, :rank :4, :sym :k})))))

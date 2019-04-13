@@ -3,7 +3,7 @@
             [chess.piece-maker :refer :all]))
 
 (deftest create-piece-maker-with-a-seed
-  (let [piece-maker (get-piece-maker 3)]
+  (let [piece-maker (get-piece-maker (java.util.Random. 3))]
     (testing "makes random numbers of pawns, including 0 and 8"
              (let [pieces      (->> (range 100)
                                     (map (fn [_] (piece-maker :pawn :white))))]
@@ -33,7 +33,7 @@
                    (set (map count pieces))))))))
 
 (deftest all-combinations-are-possible
-  (let [piece-maker (get-piece-maker 3)
+  (let [piece-maker (get-piece-maker (java.util.Random. 3))
         pieces      (->> (range 5)
                          (map (fn [_] (piece-maker :pawn :white)))
                          flatten)]
