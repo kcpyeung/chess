@@ -4,25 +4,23 @@
  '(clojure [string :as s]))
 
 (def symbols
-  {"rook"   "r"
-   "knight" "n"
-   "bishop" "b"
-   "queen"  "q"
-   "king"   "k"
-   "pawn"   "p"})
+  {:rook   :r
+   :knight :n
+   :bishop :b
+   :queen  :q
+   :king   :k
+   :pawn   :p})
 
-(defn piece [colour name]
-  (let [c (s/lower-case colour)
-        n (s/lower-case name)]
-    {:name   n,
-     :colour c
-     :sym    (as-> (symbols n) letter
-                   (cond
-                     (= c "white") (s/upper-case letter)
-                     (= c "black") letter
-                     :else         "."))}))
+(defn piece [piece-colour piece-name]
+  {:name   piece-name,
+   :colour piece-colour
+   :sym    (as-> (symbols piece-name) letter
+                 (cond
+                   (= piece-colour :white)  (keyword (s/upper-case (name letter)))
+                   (= piece-colour :black)  letter
+                   :else                    :.))})
 
 (defn empty-piece [file rank]
-  (-> (piece "empty" "empty")
+  (-> (piece :empty :empty)
       (assoc :file file)
       (assoc :rank rank)))

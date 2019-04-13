@@ -1,12 +1,12 @@
 (ns chess.board
-  (:use [chess.core :only [ascii-to-string]]
+  (:use [chess.core :only [ascii-to-keyword]]
         [chess.piece :only [empty-piece]]
         [chess.piece-maker :only [get-piece-maker]]
         [clojure.math.combinatorics :only [cartesian-product]]))
 
-(def files (map ascii-to-string (range 97 105)))
+(def files (map ascii-to-keyword (range 97 105)))
 
-(def ranks (map str (range 8 0 -1)))
+(def ranks (map (comp keyword str) (range 8 0 -1)))
 
 (defn- make-files [rank]
   (reduce (fn [m file] (assoc m file (empty-piece file rank))) {} files))
@@ -15,13 +15,14 @@
   (reduce (fn [m rank] (assoc m rank (make-files rank))) {} ranks))
 
 (defn- rand-rank-file [random]
-  [(str (inc (.nextInt random 8))) (ascii-to-string (+ 97 (.nextInt random 8)))])
+  [(keyword (str (inc (.nextInt random 8))))
+   (ascii-to-keyword (+ 97 (.nextInt random 8)))])
 
 (defn- next-empty [board random]
   (loop [[rank file]   (rand-rank-file random)]
     (let [rank-on-board (board rank)
           piece         (rank-on-board file)]
-      (if (= "." (:sym piece))
+      (if (= :. (:sym piece))
         [rank file]
         (recur (rand-rank-file random))))))
 
@@ -36,7 +37,7 @@
            (merge board)))))
 
 (def colour-piece
-  (cartesian-product ["king" "queen" "rook" "knight" "bishop" "pawn"] ["black" "white"]))
+  (cartesian-product [:king :queen :rook :knight :bishop :pawn] [:black :white]))
 
 (defn board
   ([]
