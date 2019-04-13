@@ -14,17 +14,17 @@
 (defn- make-ranks []
   (reduce (fn [m rank] (assoc m rank (make-files rank))) {} ranks))
 
-(defn- rand-rank-file [random]
-  [(keyword (str (inc (.nextInt random 8))))
-   (ascii-to-keyword (+ 97 (.nextInt random 8)))])
-
 (defn- next-empty [board random]
-  (loop [[rank file]   (rand-rank-file random)]
-    (let [rank-on-board (board rank)
-          piece         (rank-on-board file)]
-      (if (= :. (:sym piece))
-        [rank file]
-        (recur (rand-rank-file random))))))
+  (letfn
+    [(random-rank-file []
+                       [(keyword (str (inc (.nextInt random 8))))
+                        (ascii-to-keyword (+ 97 (.nextInt random 8)))])]
+    (loop [[rank file]   (random-rank-file)]
+      (let [rank-on-board (board rank)
+            piece         (rank-on-board file)]
+        (if (= :. (:sym piece))
+          [rank file]
+          (recur (random-rank-file)))))))
 
 (defn- get-piece-placer [random]
   (fn [board piece]
