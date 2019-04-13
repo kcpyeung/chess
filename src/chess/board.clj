@@ -2,6 +2,7 @@
   (:use [chess.core :only [ascii-to-keyword]]
         [chess.piece :only [empty-piece]]
         [chess.piece-maker :only [get-piece-maker]]
+        [chess.piece-placer :only [get-piece-placer]]
         [clojure.math.combinatorics :only [cartesian-product]]))
 
 (def files (map ascii-to-keyword (range 97 105)))
@@ -14,28 +15,6 @@
 (defn- make-ranks []
   (reduce (fn [m rank] (assoc m rank (make-files rank))) {} ranks))
 
-(defn- next-empty [board random]
-  (letfn
-    [(random-rank-file []
-                       [(keyword (str (inc (.nextInt random 8))))
-                        (ascii-to-keyword (+ 97 (.nextInt random 8)))])]
-    (loop [[rank file]   (random-rank-file)]
-      (let [rank-on-board (board rank)
-            piece         (rank-on-board file)]
-        (if (= :. (:sym piece))
-          [rank file]
-          (recur (random-rank-file)))))))
-
-(defn- get-piece-placer [random]
-  (fn [board piece]
-    (let [[rank-of-piece file-of-piece]            (next-empty board random)
-          rank-containing-piece                    (board rank-of-piece)]
-      (->> (assoc piece :rank rank-of-piece :file file-of-piece)
-           (hash-map file-of-piece)
-           (merge rank-containing-piece)
-           (assoc {} rank-of-piece)
-           (merge board)))))
-
 (def colour-piece
   (cartesian-product [:king :queen :rook :knight :bishop :pawn] [:black :white]))
 
@@ -43,9 +22,8 @@
   ([]
    (let [random (java.util.Random.)]
      (->> (get-piece-maker random)
-          (board random))))
-  ([random piece-maker]
+          (board (get-piece-placer random)))))
+  ([piece-placer piece-maker]
    (let [board       (make-ranks)
-         pieces      (mapcat (fn [[piece-name piece-colour]] (piece-maker piece-name piece-colour)) colour-piece)
-         place-piece (get-piece-placer random)]
-     (reduce (fn [current-board new-piece] (place-piece current-board new-piece)) board pieces))))
+         pieces      (mapcat (fn [[piece-name piece-colour]] (piece-maker piece-name piece-colour)) colour-piece)]
+     (reduce (fn [current-board new-piece] (piece-placer current-board new-piece)) board pieces))))

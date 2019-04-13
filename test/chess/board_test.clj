@@ -1,11 +1,12 @@
 (ns chess.board-test
   (:require [clojure.test :refer :all]
             [chess.board :refer [board]]
-            [chess.piece-maker :refer [get-piece-maker]]))
+            [chess.piece-maker :refer [get-piece-maker]]
+            [chess.piece-placer :refer [get-piece-placer]]))
 
 (deftest make-new-board
   (let [random (java.util.Random. 1)
-        board  (board random (get-piece-maker random))]
+        board  (board (get-piece-placer random) (get-piece-maker random))]
     (testing "has 8 ranks"
              (is (= 8 (count board))))
 
@@ -14,7 +15,7 @@
 
 (deftest placing-pieces-on-board
   (let [random    (java.util.Random. 1)
-        new-board (board random (get-piece-maker random))
+        new-board (board (get-piece-placer random) (get-piece-maker random))
         a2        (:a (:2 new-board))
         d4        (:d (:4 new-board))]
     (testing "board places white king on at a2 itself using Piece Maker"
