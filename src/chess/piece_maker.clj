@@ -1,5 +1,5 @@
 (ns chess.piece-maker
-  (:use [chess.piece :only [piece]]))
+  (:require [chess.piece :refer [piece]]))
 
 (def max-pieces
   {:pawn   8
