@@ -6,7 +6,7 @@
        (map :sym)
        (not-any? (fn [sym] (or (= :P sym) (= :p sym))))))
 
-(defn no-pawn-in-1st-or-8th-ranks [board]
+(defn no-pawn-in-1st-or-8th-ranks? [board]
   (and
    (no-pawn-in :8 board)
    (no-pawn-in :1 board)))

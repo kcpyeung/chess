@@ -53,3 +53,50 @@
                     (let [board        {:1 {:a {:name :pawn, :colour :white, :rank :1, :file :a, :sym :P}
                                             :b {:name :rook :colour :white, :rank :1, :file :b, :sym :R}}}]
                       (is (not (valid? board)))))))
+
+(deftest no-castling-possibility
+  (testing "8th rank"
+           (testing "should not contain unmoved black king and left rook"
+                    (let [board        {:8 {:a {:name :empty, :colour :empty, :rank :8, :file :a, :sym :.}
+                                            :b {:name :empty, :colour :empty, :rank :8, :file :b, :sym :.}
+                                            :c {:name :empty, :colour :empty, :rank :8, :file :c, :sym :.}
+                                            :d {:name :empty, :colour :empty, :rank :8, :file :d, :sym :.}
+                                            :e {:name :king, :colour :black, :rank :8, :file :e, :sym :k}
+                                            :f {:name :empty, :colour :empty, :rank :8, :file :f, :sym :.}
+                                            :g {:name :empty, :colour :empty, :rank :8, :file :g, :sym :.}
+                                            :h {:name :rook, :colour :black, :rank :8, :file :h, :sym :r}}}]
+                      (is (not (valid? board)))))
+
+           (testing "should not contain unmoved black king and right rook"
+                    (let [board        {:8 {:a {:name :rook, :colour :black, :rank :8, :file :a, :sym :r}
+                                            :b {:name :empty, :colour :empty, :rank :8, :file :b, :sym :.}
+                                            :c {:name :empty, :colour :empty, :rank :8, :file :c, :sym :.}
+                                            :d {:name :empty, :colour :empty, :rank :8, :file :d, :sym :.}
+                                            :e {:name :king, :colour :black, :rank :8, :file :e, :sym :k}
+                                            :f {:name :empty, :colour :empty, :rank :8, :file :f, :sym :.}
+                                            :g {:name :empty, :colour :empty, :rank :8, :file :g, :sym :.}
+                                            :h {:name :empty, :colour :empty, :rank :8, :file :h, :sym :.}}}]
+                      (is (not (valid? board))))))
+
+  (testing "1st rank"
+           (testing "should not contain unmoved white king and left rook"
+                    (let [board        {:1 {:a {:name :rook, :colour :white, :rank :1, :file :a, :sym :R}
+                                            :b {:name :empty, :colour :empty, :rank :1, :file :b, :sym :.}
+                                            :c {:name :empty, :colour :empty, :rank :1, :file :c, :sym :.}
+                                            :d {:name :empty, :colour :empty, :rank :1, :file :d, :sym :.}
+                                            :e {:name :king, :colour :white, :rank :1, :file :e, :sym :K}
+                                            :f {:name :empty, :colour :empty, :rank :1, :file :f, :sym :.}
+                                            :g {:name :empty, :colour :empty, :rank :1, :file :g, :sym :.}
+                                            :h {:name :empty, :colour :empty, :rank :1, :file :h, :sym :.}}}]
+                      (is (not (valid? board)))))
+
+           (testing "should not contain unmoved white king and right rook"
+                    (let [board        {:1 {:a {:name :empty, :colour :empty, :rank :1, :file :a, :sym :.}
+                                            :b {:name :empty, :colour :empty, :rank :1, :file :b, :sym :.}
+                                            :c {:name :empty, :colour :empty, :rank :1, :file :c, :sym :.}
+                                            :d {:name :empty, :colour :empty, :rank :1, :file :d, :sym :.}
+                                            :e {:name :king, :colour :white, :rank :1, :file :e, :sym :K}
+                                            :f {:name :empty, :colour :empty, :rank :1, :file :f, :sym :.}
+                                            :g {:name :empty, :colour :empty, :rank :1, :file :g, :sym :.}
+                                            :h {:name :rook, :colour :white, :rank :1, :file :h, :sym :R}}}]
+                      (is (not (valid? board)))))))
