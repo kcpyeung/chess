@@ -26,10 +26,10 @@
                       (is (valid? board)))))
 
   (testing "diagonal kings"
-           (testing "are valid"
+           (testing "are not valid"
                     (let [board        {:3 {:d {:name :king, :colour :white, :rank :3, :file :d, :sym :K}}
                                         :4 {:e {:name :king, :colour :black, :rank :4, :file :e, :sym :k}}}]
-                      (is (valid? board))))))
+                      (is (not (valid? board)))))))
 
 (deftest no-pawns-in-promotion-square
   (testing "8th rank"
