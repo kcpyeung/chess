@@ -20,4 +20,5 @@
 (defn board-to-string [board]
   (->> (board-to-ranks board)
        (map #(print-a-rank %))
+       (interpose "/")
        (reduce str)))
