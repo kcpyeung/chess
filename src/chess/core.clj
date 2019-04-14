@@ -1,7 +1,6 @@
 (ns chess.core
   (:require [chess.board :refer [board]])
-  (:require [chess.grid-printer])
-  (:require [chess.fen-printer])
+  (:require [chess.printer :refer [print-board]])
   (:gen-class))
 
 (defn- flag [& args]
@@ -13,7 +12,4 @@
       :else             (throw (IllegalArgumentException. "Only --fen or --grid are accepted as flags")))))
 
 (defn -main [& args]
-  (let [board (board)]
-    (if (= :grid (flag args))
-      (println (chess.grid-printer/board-to-string board))
-      (println (chess.fen-printer/board-to-string board)))))
+  (print-board (board) (flag args)))
