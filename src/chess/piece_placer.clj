@@ -1,5 +1,5 @@
 (ns chess.piece-placer
-  (:use [chess.core :only [ascii-to-keyword]]))
+  (:require [chess.common :refer [ascii-to-keyword]]))
 
 (defn- next-empty [board random]
   (letfn

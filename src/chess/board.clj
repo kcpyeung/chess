@@ -1,10 +1,11 @@
 (ns chess.board
-  (:use [chess.core :only [ascii-to-keyword]]
-        [chess.piece :only [empty-piece]]
-        [chess.piece-maker :only [get-piece-maker]]
-        [chess.piece-placer :only [get-piece-placer]]
-        [chess.placement-rules :only [valid?]]
-        [clojure.math.combinatorics :only [cartesian-product]]))
+  (:require
+    [chess.common :refer [ascii-to-keyword]]
+    [chess.piece :refer [empty-piece]]
+    [chess.piece-maker :refer [get-piece-maker]]
+    [chess.piece-placer :refer [get-piece-placer]]
+    [chess.placement-rules :refer [valid?]]
+    [clojure.math.combinatorics :refer [cartesian-product]]))
 
 (def files (map ascii-to-keyword (range 97 105)))
 
