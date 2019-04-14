@@ -12,7 +12,7 @@
                     :g {:name :empty, :colour :empty, :sym :., :file :g, :rank :4}
                     :h {:name :king, :colour :black, :sym :k, :rank :4, :file :h}}}]
     (testing "print symbols of each piece in the given rank"
-             (is (= "3N1R1k" (board-to-string rank-4))))))
+             (is (= "3N1R1k w - - 0 1" (board-to-string rank-4))))))
 
 (deftest convert-multiple-ranks-to-a-string
   (let [ranks {:4 {:a {:name :empty, :colour :empty, :sym :., :file :a, :rank :4}
@@ -33,5 +33,5 @@
                    :h {:name :king, :colour :white, :sym :K, :rank :3, :file :h}}}]
     (testing "print ranks in FEN format, separated by a trailing slash"
              (is
-              (= "3N1R1k/qp1n1RbK"
+              (= "3N1R1k/qp1n1RbK w - - 0 1"
                  (board-to-string ranks))))))

@@ -18,7 +18,8 @@
        seq))
 
 (defn board-to-string [board]
-  (->> (board-to-ranks board)
-       (map #(print-a-rank %))
-       (interpose "/")
-       (reduce str)))
+  (let [fen (->> (board-to-ranks board)
+                 (map #(print-a-rank %))
+                 (interpose "/")
+                 (reduce str))]
+    (str fen " w - - 0 1")))
