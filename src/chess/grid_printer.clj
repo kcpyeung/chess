@@ -1,9 +1,19 @@
 (ns chess.grid-printer)
 
-(defn- piece-to-string [[_ {piece-symbol :sym}]]
+(defn- print-a-piece [[_ {piece-symbol :sym}]]
   (str "  " (name piece-symbol)))
 
-(defn rank-to-string [rank]
-  (let [pieces (second (first (seq rank)))]
-    (->> (map #(piece-to-string %) pieces)
-         (reduce str))))
+(defn- print-a-rank [rank]
+  (let [line (->> (map #(print-a-piece %) rank)
+                  (apply str))]
+    (str line "\n")))
+
+(defn- board-to-ranks [board]
+  (->> (seq board)
+       (map second)
+       seq))
+
+(defn board-to-string [board]
+  (->> (board-to-ranks board)
+       (map #(print-a-rank %))
+       (reduce str)))
