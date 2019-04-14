@@ -1,7 +1,5 @@
-(ns chess.piece)
-
-(require
- '(clojure [string :as s]))
+(ns chess.piece
+  (:require [clojure.string :refer [upper-case]]))
 
 (def symbols
   {:rook   :r
@@ -16,7 +14,7 @@
    :colour piece-colour
    :sym    (as-> (symbols piece-name) letter
                  (cond
-                   (= piece-colour :white)  (keyword (s/upper-case (name letter)))
+                   (= piece-colour :white)  (keyword (upper-case (name letter)))
                    (= piece-colour :black)  letter
                    :else                    :.))})
 
