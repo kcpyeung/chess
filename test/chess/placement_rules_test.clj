@@ -31,6 +31,42 @@
                                         :4 {:e {:name :king, :colour :black, :rank :4, :file :e, :sym :k}}}]
                       (is (not (valid? board)))))))
 
+(deftest no-en-passant
+  (testing "white en passant"
+           (testing "on the right is not valid"
+                    (let [board        {:4 {:f {:name :pawn, :colour :black, :rank :4, :file :f, :sym :p}
+                                            :g {:name :empty, :colour :empty, :rank :4, :file :g, :sym :.}}
+                                        :2 {:e {:name :pawn, :colour :white, :rank :2, :file :e, :sym :P}}}]
+                      (is (not (valid? board)))))
+
+           (testing "on the left is not valid"
+                    (let [board        {:4 {:f {:name :pawn, :colour :black, :rank :4, :file :f, :sym :p}}
+                                        :2 {:g {:name :pawn, :colour :white, :rank :2, :file :g, :sym :P}}}]
+                      (is (not (valid? board)))))
+
+           (testing "doesn't occur if in the same file"
+                    (let [board        {:4 {:e {:name :pawn, :colour :black, :rank :4, :file :e, :sym :p}}
+                                        :2 {:e {:name :pawn, :colour :white, :rank :2, :file :e, :sym :P}}}]
+                      (is (valid? board)))))
+
+  (testing "black en passant"
+           (testing "on the right is not valid"
+                    (let [board        {:7 {:f {:name :pawn, :colour :black, :rank :7, :file :f, :sym :p}
+                                            :g {:name :empty, :colour :empty, :rank :7, :file :g, :sym :.}}
+                                        :5 {:e {:name :pawn, :colour :white, :rank :5, :file :e, :sym :P}}}]
+                      (is (not (valid? board)))))
+
+
+           (testing "on the left is not valid"
+                    (let [board        {:7 {:d {:name :pawn, :colour :black, :rank :7, :file :d, :sym :p}}
+                                        :5 {:e {:name :pawn, :colour :white, :rank :5, :file :e, :sym :P}}}]
+                      (is (not (valid? board)))))
+
+           (testing "doesn't occur if in the same file"
+                    (let [board        {:7 {:e {:name :pawn, :colour :black, :rank :7, :file :e, :sym :p}}
+                                        :5 {:e {:name :pawn, :colour :white, :rank :5, :file :e, :sym :P}}}]
+                      (is (valid? board))))))
+
 (deftest no-pawns-in-promotion-square
   (testing "8th rank"
            (testing "should not contain white pawns due to promotion"
